@@ -4,6 +4,7 @@ pipeline{
             label 'Jenkins_agent'
         }
     }
+    //Build stage
     stages{
         stage('Checkout'){
             steps{
@@ -19,6 +20,18 @@ pipeline{
             steps{
                 echo 'code testing stage'
             }
+        }
+    }
+    //post build stage
+    post {
+        always {
+            echo "Pipline is completed "
+        }
+        failure {
+            echo "pipeline is failed"
+        }
+        success {
+            echo "Pipeline is success"
         }
     }
 }
