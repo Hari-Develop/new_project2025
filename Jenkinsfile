@@ -4,6 +4,9 @@ pipeline{
             label 'Jenkins_agent'
         }
     }
+    environment {
+        VERSION = 'Jenkins 7.2 is running'
+    }
     //Build stage
     stages{
         stage('Checkout'){
@@ -19,6 +22,9 @@ pipeline{
         stage('Static Code analysis'){
             steps{
                 echo 'code testing stage'
+                sh """
+                    echo "$env.VERSION"
+                """
             }
         }
     }
