@@ -7,6 +7,9 @@ pipeline{
     environment {
         VERSION = 'Jenkins 7.2 is running'
     }
+    options{
+        timeout(time:5, units: 'SECONDS')
+    }
     //Build stage
     stages{
         stage('Checkout'){
@@ -17,6 +20,7 @@ pipeline{
         stage('Build'){
             steps{
                 echo 'code Build Stage'
+
             }
         }
         stage('Static Code analysis'){
@@ -24,6 +28,7 @@ pipeline{
                 echo 'code testing stage'
                 sh """
                     echo "$env.VERSION"
+                    sleep 10
                 """
             }
         }
