@@ -24,15 +24,10 @@ pipeline{
             steps{
                 echo 'Code Checkout Stage'
             }
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
         }
         stage('Build'){
             steps{
                 echo 'code Build Stage'
-
             }
         }
         stage('Static Code analysis'){
@@ -42,6 +37,10 @@ pipeline{
                     echo "$env.VERSION"
                     sleep 10
                 """
+            }
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
             }
         }
         stage('paramers check stage'){
