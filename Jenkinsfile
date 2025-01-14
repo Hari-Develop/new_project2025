@@ -12,17 +12,25 @@ pipeline{
         disableConcurrentBuilds()
     }
     Parameters {
-        string(name: '', defaultValue: '', description: '')
-        text(name: '', defaultValue: '', description: '')
-        booleanParam(name: '', defaultValue: '', description: '')
-        choice(name:'', choices: [], description: '')
-        password(name: '', defaultValue: '', description: '')
+        string(name: 'Project', defaultValue: '', description: '')
+        text(name: 'Description', defaultValue: '', description: '')
+        booleanParam(name: 'Toggle', defaultValue: '', description: '')
+        choice(name:'Env', choices: [], description: '')
+        password(name: 'Password', defaultValue: '', description: '')
     }
     //Build stage
     stages{
         stage('Checkout'){
             steps{
                 echo 'Code Checkout Stage'
+            }
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "alice,bob"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
             }
         }
         stage('Build'){
@@ -44,6 +52,7 @@ pipeline{
             steps{
                 echo "${params.Project}"
                 echo "${params.Description}"
+                echo "${params.Toggle}"
                 echo "${params.Env}"
                 echo "${params.Password}"
             }
