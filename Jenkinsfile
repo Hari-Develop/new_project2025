@@ -11,6 +11,13 @@ pipeline{
         timeout(time:5, unit: 'SECONDS')
         disableConcurrentBuilds()
     }
+    Parameters {
+        string(name: '', defaultValue: '', description: '')
+        text(name: '', defaultValue: '', description: '')
+        booleanParam(name: '', defaultValue: '', description: '')
+        choice(name:'', choices: [], description: '')
+        password(name: '', defaultValue: '', description: '')
+    }
     //Build stage
     stages{
         stage('Checkout'){
@@ -31,6 +38,14 @@ pipeline{
                     echo "$env.VERSION"
                     sleep 10
                 """
+            }
+        }
+        stage('paramers check stage'){
+            steps{
+                echo "${params.Project}"
+                echo "${params.Description}"
+                echo "${params.Env}"
+                echo "${params.Password}"
             }
         }
     }
