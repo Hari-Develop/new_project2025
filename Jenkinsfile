@@ -11,7 +11,7 @@ pipeline{
         timeout(time:5, unit: 'SECONDS')
         disableConcurrentBuilds()
     }
-    Parameters {
+    parameters {
         string(name: 'Project', defaultValue: '', description: '')
         text(name: 'Description', defaultValue: '', description: '')
         booleanParam(name: 'Toggle', defaultValue: '', description: '')
@@ -27,10 +27,6 @@ pipeline{
             input {
                 message "Should we continue?"
                 ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
             }
         }
         stage('Build'){
