@@ -8,7 +8,6 @@ pipeline{
         pacakageVersion = ''
     }
     options{
-        timeout(time:10, unit: 'SECONDS')
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
