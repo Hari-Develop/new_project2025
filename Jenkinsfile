@@ -5,7 +5,7 @@ pipeline{
         }
     }
     environment {
-        VERSION = 'Jenkins 7.2 is running'
+        pacakageVersion = ''
     }
     options{
         timeout(time:10, unit: 'SECONDS')
@@ -14,25 +14,25 @@ pipeline{
     }
     //Build stage
     stages{
-        stage('Checkout'){
+        stage('Getting the version'){
             steps{
-                echo 'Code Checkout Stage'
+                script{
+                    def pacakageJson = readJSON file: 'pacakage.json'
+                    pacakageVersion = pacakageJson.version
+                    echo "pacakage version: $pacakageVersion"
+                }
             }
         }
         stage('Build'){
             steps{
                 echo 'code Build Stage'
             }
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
         }
         stage('Static Code analysis'){
             steps{
                 echo 'code testing stage'
                 sh """
-                    echo "$env.VERSION"
+                    echo "$pacakageVersion"
                 """
             }
         }
