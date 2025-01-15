@@ -24,7 +24,11 @@ pipeline{
         }
         stage('Build'){
             steps{
-                echo 'code Build Stage'
+                sh """"
+                    npm install
+                    ls -la
+                    zip -q -r catalogue.zip -x *zip -x .git 
+                """
             }
         }
         stage('Static Code analysis'){
