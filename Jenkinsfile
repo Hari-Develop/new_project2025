@@ -24,7 +24,7 @@ pipeline{
         }
         stage('Build'){
             steps{
-                sh """"
+                sh """
                     npm install
                     ls -la
                     zip -q -r catalogue.zip -x *zip -x .git 
