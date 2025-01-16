@@ -22,12 +22,18 @@ pipeline{
                 }
             }
         }
-        stage('Build'){
+        stage('installing dependences'){
             steps{
                 sh """
                     npm install
+                """
+            }
+        }
+        stage('Build'){
+            steps{
+                sh """
                     ls -la
-                    zip -q -r catalogue.zip ./* -x "*zip" -x ".git" 
+                    zip -q -r catalogue.zip ./* -x ".git" -x "*zip"
                 """
             }
         }
