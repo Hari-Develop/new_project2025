@@ -4,12 +4,12 @@ pipeline{
             label "Jenkins_agent"
         }
     }
+    environment{
+        pacakageVersion = ''
+    }
     options{
         disableConcurrentBuilds()
         ansiColor('xterm')
-    }
-    environment{
-        pacakageVersion = ''
     }
     stages{
         stage('getting Version of the application'){
