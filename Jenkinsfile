@@ -33,6 +33,7 @@ pipeline{
             steps{
                 sh """
                     zip -q -r catalogue-${pacakageVersion}.zip ./* -x ".git" -x "*zip"
+                    ls -la
                 """
             }
         }
