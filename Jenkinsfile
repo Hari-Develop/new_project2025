@@ -1,24 +1,23 @@
 pipeline{
-    agent {
-        node {
-            label 'Jenkins_agent'
+    agent{
+        node{
+            label "Jenkins_agent"
         }
     }
-    environment {
-        pacakageVersion = ''
-    }
-    options{
+    option{
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-    //Build stage
+    envirnoment{
+        pacakageVersion = ''
+    }
     stages{
-        stage('Getting the version'){
+        stage('getting Version of the application'){
             steps{
                 script{
-                    def pacakageJson = readJSON file: 'package.json'
+                    def packageJson = readJSON file: 'package.json'
                     pacakageVersion = pacakageJson.version
-                    echo "pacakage version: $pacakageVersion"
+                    echo "the version of the application $pacakageVersion"
                 }
             }
         }
@@ -32,30 +31,20 @@ pipeline{
         stage('Build'){
             steps{
                 sh """
-                    ls -la
-                    zip -q -r catalogue.zip ./* -x ".git" -x "*zip"
-                """
-            }
-        }
-        stage('Static Code analysis'){
-            steps{
-                echo 'code testing stage'
-                sh """
-                    echo "$pacakageVersion"
+                    zip -q -r catalogue-${pacakageVersion}.zip ./* -x ".git" -x "*zip"
                 """
             }
         }
     }
-    //post build stage
-    post {
-        always {
-            echo "Pipline is completed "
+    post{
+        always{
+            echo "Pipeline is running"
         }
-        failure {
+        failure{
             echo "pipeline is failed"
         }
-        success {
-            echo "Pipeline is success"
+        success{
+            echo "pipeline is successfull"
         }
     }
 }
