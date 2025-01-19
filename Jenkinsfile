@@ -1,20 +1,87 @@
+
 pipeline{
-    agent any
+    agent{
+        node{
+            label "Jenkins_agent"
+        }
+    }
+    environment{
+        pacakageVersion = ''
+        nexusUrl = '172.31.81.82:8081'
+    }
+    options{
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+    }
     stages{
-        stage('Checkout'){
+        stage('getting Version of the application'){
             steps{
-                echo 'Code Checkout Stage'
+                script {
+
+                    def packageJson = readJSON file: 'package.json'
+                    pacakageVersion = packageJson.version
+                    echo "the version of the application: $pacakageVersion"
+                }
+            }
+        }
+        stage('installing dependences'){
+            steps{
+                sh """
+                    npm install
+                """
+            }
+        }
+        stage('unit testing'){
+            steps{
+                sh """
+                    echo "unit test will run here"
+                """
+            }
+        }
+        stage('sonar-scan'){
+            steps{
+                sh """
+                    sonar-scanner
+                """
             }
         }
         stage('Build'){
             steps{
-                echo 'code Build Stage'
+                sh """
+                    zip -q -r catalogue-${pacakageVersion}.zip ./* -x ".git" -x ".sonar-project.properties"
+                    ls -la
+                """
             }
         }
-        stage('Static Code analysis'){
+        stage('nexus artificat uploader'){
             steps{
-                echo 'code testing stage'
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${nexusUrl}",
+                    groupId: 'com.roboshop',
+                    version: "${pacakageVersion}",
+                    repository: "catalogue",
+                    credentialsId: 'nexus_auth',
+                    artifacts: [
+                        [artifactId: 'catalogue',
+                        classifier: '',
+                        file: 'catalogue-1.0.0.zip',
+                        type: 'zip']
+                    ]
+                 )
             }
+        }
+    }
+    post{
+        always{
+            echo "Pipeline is running"
+        }
+        failure{
+            echo "pipeline is failed"
+        }
+        success{
+            echo "pipeline is successfull"
         }
     }
 }
