@@ -75,6 +75,7 @@ pipeline{
     post{
         always{
             echo "Pipeline is running"
+            deleteDir()
         }
         failure{
             echo "pipeline is failed"
