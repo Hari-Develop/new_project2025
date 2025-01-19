@@ -47,7 +47,7 @@ pipeline{
         stage('Build'){
             steps{
                 sh """
-                    zip -q -r catalogue-${pacakageVersion}.zip ./* -x ".git"
+                    zip -q -r catalogue-${pacakageVersion}.zip ./* -x ".git" -x ".sonar-project.properties"
                     ls -la
                 """
             }
