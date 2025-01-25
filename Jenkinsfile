@@ -5,7 +5,7 @@ def configMap = [
     application = 'nodejsVM',
     component = 'catalogue'
 ]
-if(! env.BRANCH_NAME.equalsIgnoreCase('main')){
+if( ! env.BRANCH_NAME.equalsIgnoreCase('main')){
     pipelineDecission.decidepipeline(configMap)
 }
 else {
