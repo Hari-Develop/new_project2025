@@ -6,7 +6,7 @@ pipeline{
     }
     environment{
         pacakageVersion = ''
-        nexusUrl = '172.31.81.82:8081'
+        nexusUrl = '52.90.35.227:8081'
     }
     options{
         disableConcurrentBuilds()
