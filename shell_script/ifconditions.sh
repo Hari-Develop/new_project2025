@@ -9,3 +9,4 @@ if [ "$usage" -ge 80 ]; then
 else 
     echo "Disk usage under control"
 fi
+
