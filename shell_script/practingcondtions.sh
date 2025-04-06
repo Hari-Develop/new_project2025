@@ -2,7 +2,7 @@
 
 ID=$(id -u)
 
-if [ id -eq 0 ];
+if [ "$ID" -eq 0 ];
 then
     echo "user has the root access"
 else
