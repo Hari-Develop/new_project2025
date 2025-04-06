@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ID=$(id -u)
-
+echo "$ID"
 if [ "$ID" -eq 0 ];
 then
     echo "user has the root access"
